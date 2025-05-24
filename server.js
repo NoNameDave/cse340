@@ -10,6 +10,9 @@ const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
+const baseController = require("./controllers/baseController")
+const inventoryRoute = require("./routes/inventoryRoute")
+const utilities = require("./utilities/index")
 
 /* ***********************
  * View Engine and Templates
@@ -24,9 +27,37 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(static)
 
 // Index route
-app.get("/", function(req, res) {
-  res.render("index", { title: "Home" })
-})
+app.get("/", baseController.buildHome)
+
+// Inventory routes
+app.use("/inv", inventoryRoute)
+
+app.get("/cause-error", (req, res) => {
+  throw new Error("Manual test error for 500");
+});
+
+// 404 handler
+app.use(async (req, res, next) => {
+  const nav = await utilities.getNav()
+  res.status(404).render("error", {
+    title: "404 Error",
+    nav, // ✅ Include the nav
+    status: 404,
+    message: "Sorry, the page you requested does not exist."
+  });
+});
+
+// 500 handler
+app.use(async (err, req, res, next) => {
+  console.error(err.stack)
+  const nav = await utilities.getNav()
+  res.status(500).render("error", {
+    title: "500 Error",
+    nav, // ✅ Include the nav
+    status: 500,
+    message: "Something went wrong on the server."
+  });
+});
 
 /* ***********************
  * Local Server Information
