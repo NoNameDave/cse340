@@ -56,6 +56,8 @@ header#top-header {
 nav {
   background-color: #004488;
   padding: 0.5rem 1rem;
+  color: white;
+  text-decoration: none;
 }
 
 nav ul {
@@ -75,6 +77,23 @@ nav li {
   font-size: 1.1rem;
 }
 
+nav a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+nav a:visited {
+  color: #ffffff;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
 /* ===== FOOTER ===== */
 footer {
   background-color: #002244;
@@ -89,6 +108,86 @@ footer p {
   margin: 0;
   width: 100%;
 }
+
+.error-link {
+  text-decoration: underline;
+  color: #ff4d4d; /* Optional: red to indicate danger */
+}
+
+.login-box {
+  background-color: #00a2d3;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  width: 350px;
+  text-align: left;
+  border: 2px solid #ffffff;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.login-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 0.2rem;
+  font-size: 1rem;
+}
+
+.password-note {
+  font-size: 0.9rem;
+  color: #000;
+  margin-top: 0.5rem;
+}
+
+button[type="button"] {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  background-color: white;
+  border: 1px solid #000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.signup-text {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.signup-text a {
+  color: navy;
+  text-decoration: underline;
+}
+
+input:required:invalid, input:focus:invalid {
+ background-image: url(/images/invalid.png);
+ background-position: right top;
+ background-repeat: no-repeat;
+}
+ input:required:valid {
+ background-image: url(/images/valid.png);
+ background-position: right top;
+ background-repeat: no-repeat;
+ }
 
 @media screen and (min-width: 768px) {
   .home {

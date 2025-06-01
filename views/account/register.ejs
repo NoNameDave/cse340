@@ -1,0 +1,44 @@
+<main>
+  <h1><%= title %></h1>
+
+  <%- messages() %>
+  <% if (errors) { %>
+  <ul class="notice">
+  <% errors.array().forEach(error => { %>
+    <li><%= error.msg %></li>
+  <%  }) %>
+  </ul>
+  <% } %>
+
+  <section class="login-box">
+    <p style="font-style: italic; font-weight: bold;">All fields are required.</p>
+
+    <form action="/account/register" method="POST" class="login-form">
+      <label for="firstname">First name:</label>
+      <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
+
+      <label for="lastname">Last name:</label>
+      <input type="text" name="account_lastname" id="accountLastname" required value="<%= locals.account_lastname %>">
+
+      <label for="email">Email Address:</label>
+      <input type="email" name="account_email" required placeholder="Enter a valid email address" value="<%= locals.account_email %>">
+
+      <label for="password">Password:</label>
+      <input type="password" name="account_password" id="account_password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" title="Minimum 8 characters, 1 capital letter, 1 number and 1 special character">
+
+      <p class="password-note">
+        Passwords must be minimum of 8 characters and include 1 capital letter, 1 number and 1 special character.
+      </p>
+
+      <button type="button" onclick="togglePassword()">Show Password</button>
+      <button type="submit" class="submit-btn">Register</button>
+    </form>
+  </section>
+
+  <script>
+    function togglePassword() {
+      const password = document.getElementById('password');
+      password.type = password.type === "password" ? "text" : "password";
+    }
+  </script>
+</main>

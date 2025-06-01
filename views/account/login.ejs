@@ -1,0 +1,36 @@
+<main>
+  <h1>Login</h1>
+
+  <%- messages() %>
+
+  <section class="login-box">
+    <form id="loginForm" action="/account/login" method="POST" class="login-form">
+      <label for="email">Email Address:</label>
+      <input type="email" name="account_email" required placeholder="Enter a valid email address">
+
+      <label for="password">Password:</label>
+      <input type="password" id="account_password" name="account_password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+
+      <p class="password-note">
+        Passwords must be minimum of 8 characters and include 1 capital letter, 1 number and 1 special character.
+      </p>
+
+      <button type="button" onclick="togglePassword()">Show Password</button>
+
+      <button type="submit" class="submit-btn">Login</button>
+    </form>
+
+    <p class="signup-text">No account? <a href="/account/register">Sign-up</a></p>
+  </section>
+
+  <script>
+    function togglePassword() {
+      const password = document.getElementById('password');
+      if (password.type === "password") {
+        password.type = "text";
+      } else {
+        password.type = "password";
+      }
+    }
+  </script>
+</main>
