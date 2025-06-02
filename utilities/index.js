@@ -57,6 +57,25 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+Util.buildDetailView = async function (vehicle) {
+  const formatter = new Intl.NumberFormat('en-US')
+  const price = vehicle.inv_price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+  const miles = formatter.format(vehicle.inv_miles)
+
+  return `
+    <div class="vehicle-detail">
+      <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+      <div class="vehicle-info">
+        <h2>${vehicle.inv_make} ${vehicle.inv_model} (${vehicle.inv_year})</h2>
+        <p><strong>Price:</strong> ${price}</p>
+        <p><strong>Miles:</strong> ${miles}</p>
+        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+      </div>
+    </div>
+  `
+}
+
 Util.buildClassificationList = async function (classification_id = null) {
   let data = await invModel.getClassifications()
   let classificationList =

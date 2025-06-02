@@ -36,6 +36,22 @@ async function addClassification(classification_name) {
   }
 }
 
+async function getVehicleById (inv_id) {
+  try {
+    const sql = `
+      SELECT i.*, c.classification_name
+      FROM inventory AS i
+      JOIN classification AS c ON i.classification_id = c.classification_id
+      WHERE i.inv_id = $1
+    `
+    const result = await pool.query(sql, [inv_id])
+    return result.rows[0]
+  } catch (error) {
+    console.error("getVehicleById error:", error)
+    return null
+  }
+}
+
 async function addInventory (
   classification_id,
   inv_make,
@@ -74,4 +90,4 @@ async function addInventory (
   }
 }
 
-module.exports = {getClassifications, getInventoryByClassificationId, addClassification, addInventory};
+module.exports = {getClassifications, getInventoryByClassificationId, addClassification, addInventory, getVehicleById};

@@ -19,6 +19,23 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+invCont.buildDetailView = async function (req, res) {
+  const inv_id = parseInt(req.params.inv_id)
+  const data = await invModel.getVehicleById(inv_id)
+
+  if (!data) {
+    req.flash("notice", "Vehicle not found.")
+    return res.redirect("/inv")
+  }
+
+  const nav = await utilities.getNav()
+  res.render("inventory/detail", {
+    title: `${data.inv_year} ${data.inv_make} ${data.inv_model}`,
+    nav,
+    vehicle: data
+  })
+}
+
 invCont.buildAddClassification = async function (req, res) {
   let nav = await utilities.getNav()
   res.render("inventory/add-classification", {
