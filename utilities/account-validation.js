@@ -41,7 +41,7 @@ return [
     .trim()
     .notEmpty()
     .isStrongPassword({
-        minLength: 12,
+        minLength: 8,
         minLowercase: 1,
         minUppercase: 1,
         minNumbers: 1,
@@ -72,5 +72,59 @@ validate.checkRegData = async (req, res, next) => {
   }
   next()
 }
+
+validate.loginRules = () => {
+  return [
+    body("account_email")
+      .trim()
+      .isEmail()
+      .normalizeEmail()
+      .withMessage("A valid email is required."),
+    body("account_password")
+      .trim()
+      .notEmpty()
+      .withMessage("Password is required.")
+  ]
+}
+
+validate.checkLoginData = async (req, res, next) => {
+  const errors = validationResult(req)
+  console.log("Validation Errors:", errors.array()) // 👈 Add this
+  if (!errors.isEmpty()) {
+    let nav = await utilities.getNav()
+    return res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      errors,
+      account_email: req.body.account_email
+    })
+  }
+  next()
+}
+
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname").trim().notEmpty().withMessage("First name is required."),
+    body("account_lastname").trim().notEmpty().withMessage("Last name is required."),
+    body("account_email").isEmail().withMessage("Valid email is required."),
+  ];
+};
+
+validate.updatePasswordRules = () => {
+  return [
+    body("account_password")
+      .trim()
+      .isLength({ min: 8 })
+      .withMessage("Password must be at least 8 characters long.")
+      .matches("[0-9]")
+      .withMessage("Password must contain at least one number.")
+      .matches("[A-Z]")
+      .withMessage("Password must contain at least one uppercase letter.")
+      .matches("[a-z]")
+      .withMessage("Password must contain at least one lowercase letter.")
+      .matches("[!@#$%^&*(),.?\":{}|<>]")
+      .withMessage("Password must contain at least one special character."),
+  ];
+};
 
 module.exports = validate

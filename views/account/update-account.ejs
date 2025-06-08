@@ -1,0 +1,50 @@
+<main>
+    <h1><%= title %></h1>
+
+    <%- messages() %>
+
+    <% if (errors) { %>
+      <ul class="notice">
+        <% errors.array().forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+
+    <!-- ✅ ACCOUNT INFO UPDATE FORM -->
+    <section class="login-box">
+      <h2>Update Account Information</h2>
+      <form action="/account/update" method="post" class="login-form">
+        <label for="account_firstname">First Name:</label>
+        <input type="text" id="account_firstname" name="account_firstname" required
+          value="<%= typeof account_firstname !== 'undefined' ? account_firstname : accountData.account_firstname %>">
+
+        <label for="account_lastname">Last Name:</label>
+        <input type="text" id="account_lastname" name="account_lastname" required
+          value="<%= typeof account_lastname !== 'undefined' ? account_lastname : accountData.account_lastname %>">
+
+        <label for="account_email">Email Address:</label>
+        <input type="email" id="account_email" name="account_email" required
+          value="<%= typeof account_email !== 'undefined' ? account_email : accountData.account_email %>">
+
+        <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+        <button type="submit" class="submit-btn">Update Info</button>
+      </form>
+    </section>
+
+    <!-- ✅ PASSWORD CHANGE FORM -->
+    <section class="login-box">
+      <h2>Change Password</h2>
+      <form action="/account/update-password" method="post" class="login-form">
+        <label for="account_password">New Password:</label>
+        <input type="password" id="account_password" name="account_password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+
+        <p class="form-help">
+          Passwords must be at least 8 characters and include 1 uppercase letter, 1 number, and 1 special character.
+        </p>
+
+        <input type="hidden" name="account_id" value="<%= accountData.account_id %>">
+        <button type="submit" class="submit-btn">Change Password</button>
+      </form>
+    </section>
+  </main>

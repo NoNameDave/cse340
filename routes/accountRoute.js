@@ -10,7 +10,6 @@ router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
 router.post("/register", utilities.handleErrors(accountController.registerAccount))
 
-// Process the registration data
 router.post(
   "/register",
   regValidate.registationRules(),
@@ -21,9 +20,21 @@ router.post(
 // Process the login attempt
 router.post(
   "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
 )
 
+router.get(
+  "/",
+  utilities.checkJWTToken,
+  utilities.handleErrors(accountController.buildManagement)
+)
+
+router.get("/update/:account_id", utilities.checkLogin, accountController.buildUpdateView);
+router.post("/update", regValidate.updateAccountRules(), accountController.updateAccount);
+router.post("/update-password", regValidate.updatePasswordRules(), accountController.updatePassword);
+router.get("/logout", accountController.logout);
+
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
 module.exports = router
