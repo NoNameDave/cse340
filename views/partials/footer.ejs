@@ -1,24 +1,30 @@
-<% if (locals.loggedin) { %>
-  <div id="message-console-container">
-    <button id="openMessageConsole">Messages</button>
-    <div id="message-console" class="hidden">
-      <div class="message-header">
-        <h4>Messages</h4>
+<footer>
+  <% const d = new Date(); const year = d.getFullYear(); %>
+  <p class="copyright">© <%= year %>, CSE 340 App</p>
+  <p><a href="/cause-error" class="error-link">Trigger 500 Error</a></p>
+
+  <% if (locals.loggedin) { %>
+    <div id="message-console-container">
+      <button id="openMessageConsole">Messages</button>
+      <div id="message-console" class="hidden">
+        <div class="message-header">
+          <h4>Messages</h4>
+        </div>
+
+        <label for="recipientSelect">Choose a recipient:</label>
+        <select id="recipientSelect">
+          <option disabled selected>-- Select a user --</option>
+        </select>
+
+        <div id="messageThreadWrapper" style="display: none;">
+          <p><strong>Conversation with selected user:</strong></p>
+          <div id="messageContainer" class="message-thread"></div>
+        </div>
+
+        <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+        <button id="sendMessageBtn">Send</button>
       </div>
-
-      <label for="recipientSelect">Choose a recipient:</label>
-      <select id="recipientSelect">
-        <option disabled selected>-- Select a user --</option>
-      </select>
-
-      <div id="messageThreadWrapper" style="display: none;">
-        <p><strong>Conversation with selected user:</strong></p>
-        <div id="messageContainer" class="message-thread"></div>
-      </div>
-
-      <textarea id="messageInput" placeholder="Type your message here..."></textarea>
-      <button id="sendMessageBtn">Send</button>
     </div>
-  </div>
-  <script src="/js/messages.js"></script>
-<% } %>
+    <script src="/js/messages.js"></script>
+  <% } %>
+</footer>
