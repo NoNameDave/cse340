@@ -9,7 +9,20 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure wrapper fills the screen */
+}
+
+main {
+  flex: 1; /* This lets main take up remaining space */
 }
 
 main {
@@ -100,8 +113,8 @@ footer {
   color: #ffffff;
   text-align: center;
   padding: 1rem;
-  margin-top: 2rem;
   font-size: 0.9rem;
+  margin-top: auto; /* Push footer to bottom */
 }
 
 footer p {
@@ -188,6 +201,155 @@ input:required:invalid, input:focus:invalid {
  background-position: right top;
  background-repeat: no-repeat;
  }
+
+ /* ========== Message Console ========== */
+
+#message-console-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 90%;
+}
+
+#message-console {
+  background-color: #fff;
+  color: #000;
+  width: 300px;
+  max-width: 90vw;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#message-console.show {
+  display: flex;
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+#openMessageConsole {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.2s ease;
+}
+
+#openMessageConsole:hover {
+  background-color: #0056b3;
+}
+
+.message-thread {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-top: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+.message {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+.message em {
+  color: gray;
+  font-size: 0.8rem;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  #message-console {
+    width: 100%;
+    right: 0;
+    bottom: 4rem;
+    border-radius: 0;
+  }
+
+  #message-console-container {
+    right: 0.5rem;
+    left: 0.5rem;
+  }
+}
+
+#recipientSelect {
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.message-thread {
+  flex: 1;
+  max-height: 150px;
+  overflow-y: auto;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+#messageInput {
+  width: 100%;
+  min-height: 60px;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+#sendMessageBtn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+#sendMessageBtn:hover {
+  background-color: #218838;
+}
+
+/* Notification Bubble */
+.message-notification {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: red;
+  color: white;
+  font-size: 0.7rem;
+  border-radius: 50%;
+  padding: 3px 6px;
+}
 
 @media screen and (min-width: 768px) {
   .home {

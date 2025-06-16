@@ -153,6 +153,26 @@ Util.checkJWTToken = (req, res, next) => {
  }
 }
 
+Util.checkJWTTokenJSON = (req, res, next) => {
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          res.clearCookie("jwt")
+          return res.status(401).json({ success: false, message: "Invalid or expired token" })
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      }
+    )
+  } else {
+    return res.status(401).json({ success: false, message: "No token provided" })
+  }
+}
+
 /* ****************************************
  *  Check Login
  * ************************************ */

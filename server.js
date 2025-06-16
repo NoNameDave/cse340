@@ -17,6 +17,7 @@ const session = require("express-session")
 const pool = require('./database/')
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const messageRoute = require("./routes/messageRoute");
 
 /* ***********************
  * View Engine and Templates
@@ -24,6 +25,7 @@ const cookieParser = require("cookie-parser")
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
+app.use(express.static("public"))
 
 /* ***********************
  * Middleware
@@ -67,6 +69,8 @@ app.get("/cause-error", (req, res) => {
 });
 
 app.use("/account", require("./routes/accountRoute"))
+
+app.use("/messages", messageRoute);
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

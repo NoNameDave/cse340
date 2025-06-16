@@ -76,4 +76,14 @@ async function updatePassword(account_id, hashedPassword) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword }
+async function getAllAccounts() {
+  try {
+    const data = await pool.query("SELECT account_id, account_firstname, account_lastname FROM account")
+    return data.rows
+  } catch (error) {
+    console.error("Database error fetching accounts", error)
+    throw error
+  }
+}
+
+module.exports = { registerAccount, checkExistingEmail, getAccountByEmail, getAccountById, updateAccount, updatePassword, getAllAccounts }
